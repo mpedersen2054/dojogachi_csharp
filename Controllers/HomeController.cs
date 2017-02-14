@@ -59,14 +59,77 @@ namespace dojodachi.Controllers
             return View("Dachi");
         }
 
-        // GET: /
+        // GET: /api/feed
         [HttpPost]
         [Route("/api/feed")]
         public IActionResult Feed()
         {
+            string error;
+            string message;
+            int fullness = (int)HttpContext.Session.GetInt32("Fullness");
+            int meals = (int)HttpContext.Session.GetInt32("Meals");
+            Random rand = new Random();
+
+            // if no meals, cannot feed dachi
+            if (meals < 1)
+            {
+                error = "true";
+                message = "You do not have enough meals to do that!";
+            }
+            // else meal - 1, gains 5-10 fullness
+            else
+            {
+                int rando = rand.Next(5, 11);
+                int increaseBy = fullness + rando;
+                HttpContext.Session.SetInt32("Meals", meals - 1);
+                HttpContext.Session.SetInt32("Fullness", increaseBy);
+                error = "false";
+                message = $"You gained {rando} fullness!";
+            }
             return Json(
                 new {
-                    something = "Hello thur!",
+                    err = error,
+                    msg = message,
+                    newFullness = (int)HttpContext.Session.GetInt32("Fullness"),
+                    newMeals = (int)HttpContext.Session.GetInt32("Meals")
+                }
+            );
+        }
+
+        // GET: /api/play
+        [HttpPost]
+        [Route("/api/play")]
+        public IActionResult Play()
+        {
+            return Json(
+                new {
+                    something = "Hello thur! PLAY",
+                    another = "Hi there frendz"
+                }
+            );
+        }
+
+        // GET: /api/work
+        [HttpPost]
+        [Route("/api/work")]
+        public IActionResult Work()
+        {
+            return Json(
+                new {
+                    something = "Hello thur! WORKKKK",
+                    another = "Hi there frendz"
+                }
+            );
+        }
+
+        // GET: /api/sleep
+        [HttpPost]
+        [Route("/api/sleep")]
+        public IActionResult Sleep()
+        {
+            return Json(
+                new {
+                    something = "Hello thur! SLEEEEEEP",
                     another = "Hi there frendz"
                 }
             );
