@@ -7,7 +7,7 @@ var $feedBtn  = $('.feed-btn'),
 
 function updateDachi(act, callback) {
     var url;
-    if (act == 'feed') url = '/feed'
+    if (act == 'feed') url = '/api/feed'
     else if (act == 'play') url = '/play'
     else if (act == 'work') url = '/work'
     else if (act == 'sleep') url = '/sleep'

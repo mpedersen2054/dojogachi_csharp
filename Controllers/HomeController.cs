@@ -58,5 +58,18 @@ namespace dojodachi.Controllers
             
             return View("Dachi");
         }
+
+        // GET: /
+        [HttpPost]
+        [Route("/api/feed")]
+        public IActionResult Feed()
+        {
+            return Json(
+                new {
+                    something = "Hello thur!",
+                    another = "Hi there frendz"
+                }
+            );
+        }
     }
 }
