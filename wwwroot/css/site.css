@@ -2,3 +2,13 @@
     margin-top: 80px;
     border: 1px solid #aaa;
 }
+
+.dachi-main {
+    border-top: 1px solid #aaa;
+    min-height: 400px;
+}
+
+.dachi-info {
+    border-top: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
+}
