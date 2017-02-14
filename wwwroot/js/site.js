@@ -27,7 +27,7 @@ function updateDachi(act, callback) {
 
 $feedBtn.on('click', function(e) {
     updateDachi('feed', function(err, data) {
-        if (err || data.error == "true") return
+        if (err) return
         $message.html(data.msg)
         $fullness.html(data.newFullness)
         $meals.html(data.newMeals)
@@ -37,7 +37,7 @@ $feedBtn.on('click', function(e) {
 
 $playBtn.on('click', function(e) {
     updateDachi('play', function(err, data) {
-        if (err || data.error == "true") return
+        if (err) return
         $message.html(data.msg)
         $happiness.html(data.newHappiness)
         $energy.html(data.newEnergy)
@@ -46,16 +46,19 @@ $playBtn.on('click', function(e) {
 
 $workBtn.on('click', function(e) {
     updateDachi('work', function(err, data) {
-        if (err || data.error == "true") return
+        if (err) return
         $message.html(data.msg)
-        $energy.html(data.newEnergy)
         $meals.html(data.newMeals)
+        $energy.html(data.newEnergy)
     })
 })
 
 $sleepBtn.on('click', function(e) {
     updateDachi('sleep', function(err, data) {
-        if (err) console.log(err)
-        console.log('inside cb')
+        if (err) return
+        $message.html(data.msg)
+        $fullness.html(data.newFullness)
+        $happiness.html(data.newHappiness)
+        $energy.html(data.newEnergy)
     })
 })

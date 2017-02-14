@@ -160,11 +160,38 @@ namespace dojodachi.Controllers
         [Route("/api/sleep")]
         public IActionResult Sleep()
         {
-            // +15 energy, -5 fullness -5 happiness
+            string error;
+            string message;
+            int fullness = (int)HttpContext.Session.GetInt32("Fullness");
+            int happiness = (int)HttpContext.Session.GetInt32("Happiness");
+            int energy = (int)HttpContext.Session.GetInt32("Energy");
+
+            if (happiness < 5)
+            {
+                error = "true";
+                message = $"You do not have enough happiness to do that!";
+            }
+            else if (fullness < 5)
+            {
+                error = "true";
+                message = $"You do not have fullness energy to do that!";
+            }
+            else
+            {
+                // +15 energy, -5 fullness -5 happiness
+                HttpContext.Session.SetInt32("Fullness", fullness - 5);
+                HttpContext.Session.SetInt32("Happiness", happiness - 5);
+                HttpContext.Session.SetInt32("Energy", energy + 15);
+                error = "false";
+                message = "Your Dojogachi fell asleep! Energy + 15, Fullness - 5, Happiness - 5";
+            }
             return Json(
                 new {
-                    something = "Hello thur! SLEEEEEEP",
-                    another = "Hi there frendz"
+                    err = error,
+                    msg = message,
+                    newFullness = (int)HttpContext.Session.GetInt32("Fullness"),
+                    newHappiness = (int)HttpContext.Session.GetInt32("Happiness"),
+                    newEnergy = (int)HttpContext.Session.GetInt32("Energy")
                 }
             );
         }
