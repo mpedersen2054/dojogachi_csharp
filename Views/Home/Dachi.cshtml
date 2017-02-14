@@ -1,5 +1,30 @@
 @{
     ViewData["Title"] = "Dachi";
 }
-<h1>HELLO DACHI</h1>
-<p>Get to adding stuff</p>
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="row dachi-container">
+            <div class="col-md-3">
+                <div class="stat">
+                    Fullness <span class="fullness">@ViewBag.Fullness</span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat">
+                    Happiness <span class="happiness">@ViewBag.Happiness</span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat">
+                    Energy <span class="energy">@ViewBag.Energy</span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat">
+                    Meals <span class="meals">@ViewBag.Meals</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
