@@ -5,19 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
-public static class SessionExtensions
-{
-    public static void SetObjectAsJson(this ISession session, string key, object value)
-    {
-        session.SetString(key, JsonConvert.SerializeObject(value));
-    }
-    public static T GetObjectFromJson<T>(this ISession session, string key)
-    {
-        var value = session.GetString(key);
-        return value == null ? default(T) : JsonConvert.DeserializeObject<T>(value);
-    }
-}
-
 namespace dojodachi.Controllers
 {
     
@@ -84,7 +71,7 @@ namespace dojodachi.Controllers
                 HttpContext.Session.SetInt32("Meals", meals - 1);
                 HttpContext.Session.SetInt32("Fullness", increaseBy);
                 error = "false";
-                message = $"You gained {rando} fullness!";
+                message = $"You fed your Dojogachi! Fullness + {rando}, Meals - 1";
             }
             return Json(
                 new {
@@ -101,10 +88,34 @@ namespace dojodachi.Controllers
         [Route("/api/play")]
         public IActionResult Play()
         {
+            string error;
+            string message;
+            int energy = (int)HttpContext.Session.GetInt32("Energy");
+            int happiness = (int)HttpContext.Session.GetInt32("Happiness");
+            Random rand = new Random();
+
+            // not enough energy
+            if (energy < 5)
+            {
+                error = "true";
+                message = "You do not have enough energy to do that!";
+            }
+            else
+            {
+                // - 5 energy, gain rand # 5-10 happiness
+                int rando = rand.Next(5, 11);
+                int increaseBy = happiness + rando;
+                HttpContext.Session.SetInt32("Energy", energy - 5);
+                HttpContext.Session.SetInt32("Happiness", increaseBy);
+                error = "false";
+                message = $"You played with your Dojogachi! Happiness + {rando}, Energy - 5";
+            }
             return Json(
                 new {
-                    something = "Hello thur! PLAY",
-                    another = "Hi there frendz"
+                    err = error,
+                    msg = message,
+                    newHappiness = (int)HttpContext.Session.GetInt32("Happiness"),
+                    newEnergy = (int)HttpContext.Session.GetInt32("Energy")
                 }
             );
         }
