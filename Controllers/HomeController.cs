@@ -7,12 +7,20 @@ namespace dojodachi.Controllers
 {
     public class HomeController : Controller
     {
-        // GET: /Home/
+        // GET: /
         [HttpGet]
         [Route("")]
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("DachiIndex");
+        }
+
+        // GET: /
+        [HttpGet]
+        [Route("/dachi")]
+        public IActionResult DachiIndex()
+        {
+            return View("Dachi");
         }
     }
 }
