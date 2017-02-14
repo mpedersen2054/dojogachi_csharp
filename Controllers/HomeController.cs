@@ -125,10 +125,32 @@ namespace dojodachi.Controllers
         [Route("/api/work")]
         public IActionResult Work()
         {
+            string error;
+            string message;
+            int energy = (int)HttpContext.Session.GetInt32("Energy");
+            int meals = (int)HttpContext.Session.GetInt32("Meals");
+            Random rand = new Random();
+            // -5 energy, + 1-3 meals
+            if (energy < 5)
+            {
+                error = "true";
+                message = "You do not have enough energy to do that!";
+            }
+            else
+            {
+                int rando = rand.Next(1, 4);
+                int increaseBy = rando + meals;
+                HttpContext.Session.SetInt32("Energy", energy - 5);
+                HttpContext.Session.SetInt32("Meals", increaseBy);
+                error = "false";
+                message = $"You played with your Dojogachi! Meals + {rando}, Energy - 5";
+            }
             return Json(
                 new {
-                    something = "Hello thur! WORKKKK",
-                    another = "Hi there frendz"
+                    err = error,
+                    msg = message,
+                    newEnergy = (int)HttpContext.Session.GetInt32("Energy"),
+                    newMeals = (int)HttpContext.Session.GetInt32("Meals")
                 }
             );
         }
@@ -138,6 +160,7 @@ namespace dojodachi.Controllers
         [Route("/api/sleep")]
         public IActionResult Sleep()
         {
+            // +15 energy, -5 fullness -5 happiness
             return Json(
                 new {
                     something = "Hello thur! SLEEEEEEP",

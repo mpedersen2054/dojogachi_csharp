@@ -46,8 +46,10 @@ $playBtn.on('click', function(e) {
 
 $workBtn.on('click', function(e) {
     updateDachi('work', function(err, data) {
-        if (err) console.log(err)
-        console.log('inside cb')
+        if (err || data.error == "true") return
+        $message.html(data.msg)
+        $energy.html(data.newEnergy)
+        $meals.html(data.newMeals)
     })
 })
 
