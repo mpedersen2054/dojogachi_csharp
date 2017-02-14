@@ -1,4 +1,3 @@
-// feed, play, work, sleep
 var $feedBtn = $('.feed-btn'),
     $playBtn = $('.play-btn'),
     $workBtn = $('.work-btn'),
@@ -9,7 +8,8 @@ var $feedBtn = $('.feed-btn'),
     $meals = $('.meals'),
     $message = $('.message')
 
-
+// make request to server, api varies based
+// on arg passed in ('feed', 'play', ...)
 function updateDachi(act, callback) {
     var url;
     if (act == 'feed') url = '/api/feed'
@@ -19,46 +19,53 @@ function updateDachi(act, callback) {
     else callback('Something went wrong', null)
 
     $.post(url, function(data) {
-        // console.log(data, url)
         callback(null, data)
     })
 }
 
+// organize handler functions
+var handlers = {
+    handleFeed: function(e) {
+        updateDachi('feed', function(err, data) {
+            if (err) return
+            $message.html(data.msg)
+            $fullness.html(data.newFullness)
+            $meals.html(data.newMeals)
+            console.log('updated dom for feed!')
+        })
+    },
 
-$feedBtn.on('click', function(e) {
-    updateDachi('feed', function(err, data) {
-        if (err) return
-        $message.html(data.msg)
-        $fullness.html(data.newFullness)
-        $meals.html(data.newMeals)
-        console.log('updated dom for feed!')
-    })
-})
+    handlePlay: function(e) {
+        updateDachi('play', function(err, data) {
+            if (err) return
+            $message.html(data.msg)
+            $happiness.html(data.newHappiness)
+            $energy.html(data.newEnergy)
+        })
+    },
 
-$playBtn.on('click', function(e) {
-    updateDachi('play', function(err, data) {
-        if (err) return
-        $message.html(data.msg)
-        $happiness.html(data.newHappiness)
-        $energy.html(data.newEnergy)
-    })
-})
+    handleWork: function(e) {
+        updateDachi('work', function(err, data) {
+            if (err) return
+            $message.html(data.msg)
+            $meals.html(data.newMeals)
+            $energy.html(data.newEnergy)
+        })
+    },
 
-$workBtn.on('click', function(e) {
-    updateDachi('work', function(err, data) {
-        if (err) return
-        $message.html(data.msg)
-        $meals.html(data.newMeals)
-        $energy.html(data.newEnergy)
-    })
-})
+    handleSleep: function(e) {
+        updateDachi('sleep', function(err, data) {
+            if (err) return
+            $message.html(data.msg)
+            $fullness.html(data.newFullness)
+            $happiness.html(data.newHappiness)
+            $energy.html(data.newEnergy)
+        })
+    }
+}
 
-$sleepBtn.on('click', function(e) {
-    updateDachi('sleep', function(err, data) {
-        if (err) return
-        $message.html(data.msg)
-        $fullness.html(data.newFullness)
-        $happiness.html(data.newHappiness)
-        $energy.html(data.newEnergy)
-    })
-})
+// attach handler functions
+$feedBtn.on('click', handlers.handleFeed)
+$playBtn.on('click', handlers.handlePlay)
+$workBtn.on('click', handlers.handleWork)
+$sleepBtn.on('click', handlers.handleSleep)

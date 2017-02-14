@@ -7,9 +7,22 @@ using Newtonsoft.Json;
 
 namespace dojodachi.Controllers
 {
-    
     public class HomeController : Controller
     {
+
+        // private T IsGameOver<T>(int fullness, int happiness, int energy)
+        // {
+        //     Tuple<bool,string> resp = new Tuple<bool,string>();
+        //     // handle win cond
+        //     if (fullness > 99)
+        //     {
+
+        //     }
+
+        //     // handle lose cond
+        //     return ;
+        // }
+
         // GET: /
         [HttpGet]
         [Route("")]
@@ -25,24 +38,18 @@ namespace dojodachi.Controllers
         {
             if (HttpContext.Session.GetString("Playing") != "true")
             {
+                // initialize session vars
                 HttpContext.Session.SetString("Playing", "true");
-                System.Console.WriteLine("HELLO FROM INSIDE IF STATE");
-                // List<int> dachiData = new List<int>() {};
-                // HttpContext.Session.SetObjectAsJson("DachiData", dachiData);
                 HttpContext.Session.SetInt32("Fullness", 20);
                 HttpContext.Session.SetInt32("Happiness", 20);
                 HttpContext.Session.SetInt32("Energy", 50);
                 HttpContext.Session.SetInt32("Meals", 3);
             }
-            
+            // set initial data, updates will be handled by ajax
             ViewBag.Fullness = HttpContext.Session.GetInt32("Fullness");
             ViewBag.Happiness = HttpContext.Session.GetInt32("Happiness");
             ViewBag.Energy = HttpContext.Session.GetInt32("Energy");
             ViewBag.Meals = HttpContext.Session.GetInt32("Meals");
-
-            // List<int> retData = HttpContext.Session.GetObjectFromJson("DachiData");
-            // System.Console.WriteLine(retData);
-            
             return View("Dachi");
         }
 
@@ -56,6 +63,8 @@ namespace dojodachi.Controllers
             int fullness = (int)HttpContext.Session.GetInt32("Fullness");
             int meals = (int)HttpContext.Session.GetInt32("Meals");
             Random rand = new Random();
+
+            // GameOver();
 
             // if no meals, cannot feed dachi
             if (meals < 1)
@@ -73,6 +82,7 @@ namespace dojodachi.Controllers
                 error = "false";
                 message = $"You fed your Dojogachi! Fullness + {rando}, Meals - 1";
             }
+
             return Json(
                 new {
                     err = error,
@@ -110,6 +120,7 @@ namespace dojodachi.Controllers
                 error = "false";
                 message = $"You played with your Dojogachi! Happiness + {rando}, Energy - 5";
             }
+
             return Json(
                 new {
                     err = error,
@@ -130,6 +141,7 @@ namespace dojodachi.Controllers
             int energy = (int)HttpContext.Session.GetInt32("Energy");
             int meals = (int)HttpContext.Session.GetInt32("Meals");
             Random rand = new Random();
+
             // -5 energy, + 1-3 meals
             if (energy < 5)
             {
@@ -145,6 +157,7 @@ namespace dojodachi.Controllers
                 error = "false";
                 message = $"You played with your Dojogachi! Meals + {rando}, Energy - 5";
             }
+
             return Json(
                 new {
                     err = error,
