@@ -28,7 +28,15 @@ var handlers = {
     handleFeed: function(e) {
         updateDachi('feed', function(err, data) {
             if (err) return
-            $message.html(data.msg)
+            var msg
+            console.log(typeof data.err)
+            if (data.err == 'true') {
+                console.log('INSIDE DATA.ERR == TRUE')
+                msg = `${data.msg} <a href="/reset" class="btn btn-primary">Play again?</a>`
+            } else {
+                msg = data.msg
+            }
+            $message.html(msg)
             $fullness.html(data.newFullness)
             $meals.html(data.newMeals)
             console.log('updated dom for feed!')
@@ -38,7 +46,15 @@ var handlers = {
     handlePlay: function(e) {
         updateDachi('play', function(err, data) {
             if (err) return
-            $message.html(data.msg)
+            var msg
+            console.log(typeof data.err)
+            if (data.err == 'true') {
+                console.log('INSIDE DATA.ERR == TRUE')
+                msg = `${data.msg} <a href="/reset" class="btn btn-primary">Play again?</a>`
+            } else {
+                msg = data.msg
+            }
+            $message.html(msg)
             $happiness.html(data.newHappiness)
             $energy.html(data.newEnergy)
         })
@@ -47,7 +63,15 @@ var handlers = {
     handleWork: function(e) {
         updateDachi('work', function(err, data) {
             if (err) return
-            $message.html(data.msg)
+            var msg
+            console.log(typeof data.err)
+            if (data.err == 'true') {
+                console.log('INSIDE DATA.ERR == TRUE')
+                msg = `${data.msg} <a href="/reset" class="btn btn-primary">Play again?</a>`
+            } else {
+                msg = data.msg
+            }
+            $message.html(msg)
             $meals.html(data.newMeals)
             $energy.html(data.newEnergy)
         })
@@ -56,7 +80,15 @@ var handlers = {
     handleSleep: function(e) {
         updateDachi('sleep', function(err, data) {
             if (err) return
-            $message.html(data.msg)
+            var msg
+            console.log(typeof data.err)
+            if (data.err == 'true') {
+                console.log('INSIDE DATA.ERR == TRUE')
+                msg = `${data.msg} <a href="/reset" class="btn btn-primary">Play again?</a>`
+            } else {
+                msg = data.msg
+            }
+            $message.html(msg)
             $fullness.html(data.newFullness)
             $happiness.html(data.newHappiness)
             $energy.html(data.newEnergy)
