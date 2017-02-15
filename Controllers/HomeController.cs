@@ -9,6 +9,12 @@ namespace dojodachi.Controllers
 {
     public class HomeController : Controller
     {
+
+        private string img1 = "/images/face1.jpg";
+        private string img2 = "/images/face2.jpg";
+        private string img3 = "/images/face3.jpg";
+        private string img4 = "/images/face4.jpg";
+
         // GET: /
         [HttpGet]
         [Route("")]
@@ -55,6 +61,7 @@ namespace dojodachi.Controllers
         {
             string error;
             string message;
+            string image;
             int fullness = (int)HttpContext.Session.GetInt32("Fullness");
             int meals = (int)HttpContext.Session.GetInt32("Meals");
             Random rand = new Random();
@@ -64,6 +71,7 @@ namespace dojodachi.Controllers
             {
                 error = "false";
                 message = "You do not have enough meals to do that!";
+                image = img3;
             }
             // else meal - 1, gains 5-10 fullness
             else
@@ -87,6 +95,7 @@ namespace dojodachi.Controllers
                 {
                     error = "true";
                     message = "Your Dojogachi reached max Fullness! You win!";
+                    image = img4;
                     HttpContext.Session.SetInt32("Fullness", 100);    
                 }
                 else
@@ -95,6 +104,7 @@ namespace dojodachi.Controllers
                     HttpContext.Session.SetInt32("Fullness", increaseBy);
                     error = "false";
                     message = $"You fed your Dojogachi! Fullness + {rando}, Meals - 1";
+                    image = img2;
                 }
             }
 
@@ -102,6 +112,7 @@ namespace dojodachi.Controllers
                 new {
                     err = error,
                     msg = message,
+                    imgUrl = image,
                     newFullness = (int)HttpContext.Session.GetInt32("Fullness"),
                     newMeals = (int)HttpContext.Session.GetInt32("Meals")
                 }
@@ -115,6 +126,7 @@ namespace dojodachi.Controllers
         {
             string error;
             string message;
+            string image;
             int energy = (int)HttpContext.Session.GetInt32("Energy");
             int happiness = (int)HttpContext.Session.GetInt32("Happiness");
             Random rand = new Random();
@@ -124,6 +136,7 @@ namespace dojodachi.Controllers
             {
                 error = "true";
                 message = "Game over! Your Dojogachi ran out of Energy!";
+                image = img3;
                 HttpContext.Session.SetInt32("Energy", 0);
             }
             else
@@ -147,6 +160,7 @@ namespace dojodachi.Controllers
                 {
                     error = "true";
                     message = "Your Dojogachi reached max Happiness! You win!";
+                    image = img4;
                     HttpContext.Session.SetInt32("Happiness", 100);
                 }
                 else
@@ -154,6 +168,7 @@ namespace dojodachi.Controllers
                     HttpContext.Session.SetInt32("Energy", energy - 5);
                     HttpContext.Session.SetInt32("Happiness", increaseBy);
                     error = "false";
+                    image = img2;
                     message = $"You played with your Dojogachi! Happiness + {rando}, Energy - 5";
                 }
             }
@@ -175,6 +190,7 @@ namespace dojodachi.Controllers
         {
             string error;
             string message;
+            string image;
             int energy = (int)HttpContext.Session.GetInt32("Energy");
             int meals = (int)HttpContext.Session.GetInt32("Meals");
             Random rand = new Random();
@@ -184,6 +200,7 @@ namespace dojodachi.Controllers
             {
                 error = "true";
                 message = "Game over! Your Dojogachi ran out of Energy!";
+                image = img3;
                 HttpContext.Session.SetInt32("Energy", 0);
             }
             else
@@ -194,12 +211,14 @@ namespace dojodachi.Controllers
                 HttpContext.Session.SetInt32("Meals", increaseBy);
                 error = "false";
                 message = $"You made your Dojogachi work! Meals + {rando}, Energy - 5";
+                image = img2;
             }
 
             return Json(
                 new {
                     err = error,
                     msg = message,
+                    imgUrl = image,
                     newEnergy = (int)HttpContext.Session.GetInt32("Energy"),
                     newMeals = (int)HttpContext.Session.GetInt32("Meals")
                 }
@@ -213,6 +232,7 @@ namespace dojodachi.Controllers
         {
             string error;
             string message;
+            string image;
             int fullness = (int)HttpContext.Session.GetInt32("Fullness");
             int happiness = (int)HttpContext.Session.GetInt32("Happiness");
             int energy = (int)HttpContext.Session.GetInt32("Energy");
@@ -221,12 +241,14 @@ namespace dojodachi.Controllers
             {
                 error = "true";
                 message = "Game over! Your Dojogachi ran out of Happiness!";
+                image = img3;
                 HttpContext.Session.SetInt32("Happiness", 0);
             }
             else if (fullness - 5 < 5)
             {
                 error = "true";
                 message = "Game over! Your Dojogachi ran out of Fullness!";
+                image = img3;
                 HttpContext.Session.SetInt32("Fullness", 0);
             }
             else
@@ -240,18 +262,21 @@ namespace dojodachi.Controllers
                     HttpContext.Session.SetInt32("Energy", 100);
                     error = "true";
                     message = "Your Dojogachi reached max Happiness! You win!";
+                    image = img4;
                 }
                 else
                 {
                     HttpContext.Session.SetInt32("Energy", energy + 15);
                     error = "false";
                     message = "Your Dojogachi fell asleep! Energy + 15, Fullness - 5, Happiness - 5";
+                    image = img2;
                 }
             }
             return Json(
                 new {
                     err = error,
                     msg = message,
+                    imgUrl = image,
                     newFullness = (int)HttpContext.Session.GetInt32("Fullness"),
                     newHappiness = (int)HttpContext.Session.GetInt32("Happiness"),
                     newEnergy = (int)HttpContext.Session.GetInt32("Energy")
@@ -260,3 +285,24 @@ namespace dojodachi.Controllers
         }
     }
 }
+
+/*
+default 1
+
+not enough meals 3
+max fullness 4
+fed dojogachi 2
+
+ran out of energy 3
+max happiness 4
+played w dojo 2
+
+ran out of energy 3
+make dojog work 2
+
+ran out of happiness 3
+ran out of fullness 3
+max energy 4
+sleep 2
+
+*/
