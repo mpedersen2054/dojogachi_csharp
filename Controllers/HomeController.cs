@@ -177,6 +177,7 @@ namespace dojodachi.Controllers
                 new {
                     err = error,
                     msg = message,
+                    imgUrl = image,
                     newHappiness = (int)HttpContext.Session.GetInt32("Happiness"),
                     newEnergy = (int)HttpContext.Session.GetInt32("Energy")
                 }

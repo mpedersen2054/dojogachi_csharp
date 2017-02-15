@@ -9,7 +9,7 @@ var $feedBtn = $('.feed-btn'),
     $message = $('.message'),
     $dachiImg = $('.dachi-img')
 
-// make request to server, api varies based
+// make request to server, url varies based
 // on arg passed in ('feed', 'play', ...)
 function updateDachi(act, callback) {
     var url;
@@ -20,6 +20,7 @@ function updateDachi(act, callback) {
     else callback('Something went wrong', null)
 
     $.post(url, function(data) {
+        // change main img based on action
         $dachiImg.attr('src', data.imgUrl)
         callback(null, data)
     })
@@ -29,13 +30,9 @@ function updateDachi(act, callback) {
 var handlers = {
     handleFeed: function(e) {
         updateDachi('feed', function(err, data) {
-            var msg
-            if (err) return // not the best error handling lol
-            if (data.err == 'true') {
-                msg = `${data.msg} <a href="/reset" class="btn playagn-btn btn-success">Play again?</a>`
-            } else {
-                msg = data.msg
-            }
+            if (err) return
+            var gameOver = data.err && data.err == 'true'
+            var msg = gameOver ? `${data.msg} <a href="/reset" class="btn playagn-btn btn-success">Play again?</a>` : data.msg
             $message.html(msg)
             $fullness.html(data.newFullness)
             $meals.html(data.newMeals)
@@ -45,12 +42,8 @@ var handlers = {
     handlePlay: function(e) {
         updateDachi('play', function(err, data) {
             if (err) return
-            var msg
-            if (data.err == 'true') {
-                msg = `${data.msg} <a href="/reset" class="btn playagn-btn btn-success">Play again?</a>`
-            } else {
-                msg = data.msg
-            }
+            var gameOver = data.err && data.err == 'true'
+            var msg = gameOver ? `${data.msg} <a href="/reset" class="btn playagn-btn btn-success">Play again?</a>` : data.msg
             $message.html(msg)
             $happiness.html(data.newHappiness)
             $energy.html(data.newEnergy)
@@ -60,12 +53,8 @@ var handlers = {
     handleWork: function(e) {
         updateDachi('work', function(err, data) {
             if (err) return
-            var msg
-            if (data.err == 'true') {
-                msg = `${data.msg} <a href="/reset" class="btn playagn-btn btn-success">Play again?</a>`
-            } else {
-                msg = data.msg
-            }
+            var gameOver = data.err && data.err == 'true'
+            var msg = gameOver ? `${data.msg} <a href="/reset" class="btn playagn-btn btn-success">Play again?</a>` : data.msg
             $message.html(msg)
             $meals.html(data.newMeals)
             $energy.html(data.newEnergy)
@@ -75,12 +64,8 @@ var handlers = {
     handleSleep: function(e) {
         updateDachi('sleep', function(err, data) {
             if (err) return
-            var msg
-            if (data.err == 'true') {
-                msg = `${data.msg} <a href="/reset" class="btn playagn-btn btn-success">Play again?</a>`
-            } else {
-                msg = data.msg
-            }
+            var gameOver = data.err && data.err == 'true'
+            var msg = gameOver ? `${data.msg} <a href="/reset" class="btn playagn-btn btn-success">Play again?</a>` : data.msg
             $message.html(msg)
             $fullness.html(data.newFullness)
             $happiness.html(data.newHappiness)
