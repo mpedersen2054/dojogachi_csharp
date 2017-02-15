@@ -28,12 +28,24 @@
     border-top: 1px solid #aaa;
     border-bottom: 1px solid #aaa;
     padding: 20px 0;
-    color: #444;
-    text-align: center;
+    color: #000;
+    background-color: #ddd;
+    /*text-align: center;*/
     font-size: 18px;
 }
 
 .dachi-btns {
     padding: 10px 0;
-    text-align: center;
+}
+
+.dachi-btns .btn {
+    margin-right: 10px;
+}
+
+.playagn-btn {
+    float: right;
+}
+
+.btn-group {
+    margin: 0 -15px;
 }

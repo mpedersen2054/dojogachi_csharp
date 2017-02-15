@@ -27,19 +27,16 @@ function updateDachi(act, callback) {
 var handlers = {
     handleFeed: function(e) {
         updateDachi('feed', function(err, data) {
-            if (err) return
             var msg
-            console.log(typeof data.err)
+            if (err) return // not the best error handling lol
             if (data.err == 'true') {
-                console.log('INSIDE DATA.ERR == TRUE')
-                msg = `${data.msg} <a href="/reset" class="btn btn-primary">Play again?</a>`
+                msg = `${data.msg} <a href="/reset" class="btn playagn-btn btn-success">Play again?</a>`
             } else {
                 msg = data.msg
             }
             $message.html(msg)
             $fullness.html(data.newFullness)
             $meals.html(data.newMeals)
-            console.log('updated dom for feed!')
         })
     },
 
@@ -47,10 +44,8 @@ var handlers = {
         updateDachi('play', function(err, data) {
             if (err) return
             var msg
-            console.log(typeof data.err)
             if (data.err == 'true') {
-                console.log('INSIDE DATA.ERR == TRUE')
-                msg = `${data.msg} <a href="/reset" class="btn btn-primary">Play again?</a>`
+                msg = `${data.msg} <a href="/reset" class="btn playagn-btn btn-success">Play again?</a>`
             } else {
                 msg = data.msg
             }
@@ -64,10 +59,8 @@ var handlers = {
         updateDachi('work', function(err, data) {
             if (err) return
             var msg
-            console.log(typeof data.err)
             if (data.err == 'true') {
-                console.log('INSIDE DATA.ERR == TRUE')
-                msg = `${data.msg} <a href="/reset" class="btn btn-primary">Play again?</a>`
+                msg = `${data.msg} <a href="/reset" class="btn playagn-btn btn-success">Play again?</a>`
             } else {
                 msg = data.msg
             }
@@ -81,10 +74,8 @@ var handlers = {
         updateDachi('sleep', function(err, data) {
             if (err) return
             var msg
-            console.log(typeof data.err)
             if (data.err == 'true') {
-                console.log('INSIDE DATA.ERR == TRUE')
-                msg = `${data.msg} <a href="/reset" class="btn btn-primary">Play again?</a>`
+                msg = `${data.msg} <a href="/reset" class="btn playagn-btn btn-success">Play again?</a>`
             } else {
                 msg = data.msg
             }
