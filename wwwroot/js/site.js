@@ -6,7 +6,8 @@ var $feedBtn = $('.feed-btn'),
     $happiness = $('.happiness'),
     $energy = $('.energy'),
     $meals = $('.meals'),
-    $message = $('.message')
+    $message = $('.message'),
+    $dachiImg = $('.dachi-img')
 
 // make request to server, api varies based
 // on arg passed in ('feed', 'play', ...)
@@ -19,6 +20,7 @@ function updateDachi(act, callback) {
     else callback('Something went wrong', null)
 
     $.post(url, function(data) {
+        $dachiImg.attr('src', data.imgUrl)
         callback(null, data)
     })
 }

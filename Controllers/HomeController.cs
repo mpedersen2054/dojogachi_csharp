@@ -10,7 +10,7 @@ namespace dojodachi.Controllers
     public class HomeController : Controller
     {
 
-        private string img1 = "/images/face1.jpg";
+        // private string img1 = "/images/face1.jpg";
         private string img2 = "/images/face2.jpg";
         private string img3 = "/images/face3.jpg";
         private string img4 = "/images/face4.jpg";
@@ -285,24 +285,3 @@ namespace dojodachi.Controllers
         }
     }
 }
-
-/*
-default 1
-
-not enough meals 3
-max fullness 4
-fed dojogachi 2
-
-ran out of energy 3
-max happiness 4
-played w dojo 2
-
-ran out of energy 3
-make dojog work 2
-
-ran out of happiness 3
-ran out of fullness 3
-max energy 4
-sleep 2
-
-*/
