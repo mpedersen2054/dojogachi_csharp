@@ -20,6 +20,13 @@ function updateDachi(act, callback) {
     else callback('Something went wrong', null)
 
     $.post(url, function(data) {
+        // if game over unbind event handlers
+        if (data.err == 'true') {
+            $feedBtn.unbind()
+            $playBtn.unbind()
+            $workBtn.unbind()
+            $sleepBtn.unbind()
+        }
         // change main img based on action
         $dachiImg.attr('src', data.imgUrl)
         callback(null, data)
