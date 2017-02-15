@@ -10,7 +10,7 @@ namespace dojodachi.Controllers
     public class HomeController : Controller
     {
 
-        // private string img1 = "/images/face1.jpg";
+        private string img1 = "/images/face1.jpg";
         private string img2 = "/images/face2.jpg";
         private string img3 = "/images/face3.jpg";
         private string img4 = "/images/face4.jpg";
@@ -30,18 +30,25 @@ namespace dojodachi.Controllers
         {
             if (HttpContext.Session.GetString("Playing") != "true")
             {
+                HttpContext.Session.SetString("Playing", "true");
                 // initialize session vars
                 HttpContext.Session.SetString("Playing", "true");
                 HttpContext.Session.SetInt32("Fullness", 20);
                 HttpContext.Session.SetInt32("Happiness", 20);
                 HttpContext.Session.SetInt32("Energy", 50);
                 HttpContext.Session.SetInt32("Meals", 3);
+                ViewBag.Fullness = HttpContext.Session.GetInt32("Fullness");
+                ViewBag.Happiness = HttpContext.Session.GetInt32("Happiness");
+                ViewBag.Energy = HttpContext.Session.GetInt32("Energy");
+                ViewBag.Meals = HttpContext.Session.GetInt32("Meals");
             }
             // set initial data, updates will be handled by ajax
             ViewBag.Fullness = HttpContext.Session.GetInt32("Fullness");
             ViewBag.Happiness = HttpContext.Session.GetInt32("Happiness");
             ViewBag.Energy = HttpContext.Session.GetInt32("Energy");
             ViewBag.Meals = HttpContext.Session.GetInt32("Meals");
+            ViewBag.Img = img1;
+            ViewBag.Msg = "No Messages.";
             return View("Dachi");
         }
 
