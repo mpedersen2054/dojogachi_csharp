@@ -68,8 +68,20 @@ namespace dojodachi.Controllers
             else
             {
                 int rando = rand.Next(5, 11);
-                int increaseBy = fullness + rando;
+                int increaseBy;
 
+                // see if Dojogachi likes it
+                if (rand.Next(1, 5) == 1)
+                {
+                    increaseBy = fullness;
+                    rando = 0;
+                }
+                else
+                {
+                    increaseBy = fullness + rando;
+                }
+
+                // handle if full maxed out
                 if (increaseBy > 99)
                 {
                     error = "true";
@@ -117,7 +129,18 @@ namespace dojodachi.Controllers
             {
                 // - 5 energy, gain rand # 5-10 happiness
                 int rando = rand.Next(5, 11);
-                int increaseBy = happiness + rando;
+                int increaseBy;
+
+                // see if Dojogachi likes it
+                if (rand.Next(1, 5) == 1)
+                {
+                    increaseBy = happiness;
+                    rando = 0;
+                }
+                else
+                {
+                    increaseBy = happiness + rando;
+                }
 
                 if (increaseBy > 99)
                 {
