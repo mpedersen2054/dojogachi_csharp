@@ -39,6 +39,7 @@ namespace dojodachi.Controllers
             return View("Dachi");
         }
 
+        // GET: /reset
         [HttpGet]
         [Route("/reset")]
         public IActionResult Reset()
@@ -192,7 +193,7 @@ namespace dojodachi.Controllers
                 HttpContext.Session.SetInt32("Energy", energy - 5);
                 HttpContext.Session.SetInt32("Meals", increaseBy);
                 error = "false";
-                message = $"You played with your Dojogachi! Meals + {rando}, Energy - 5";
+                message = $"You made your Dojogachi work! Meals + {rando}, Energy - 5";
             }
 
             return Json(
